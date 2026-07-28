@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 @EnableMongoAuditing
 public class MongoConfig {
 
-    @Value("${spring.data.mongodb.uri:mongodb://localhost:27017/resumebuilder}")
+    @Value("${SPRING_DATA_MONGODB_URI:${spring.data.mongodb.uri:${MONGODB_URI:mongodb://localhost:27017/resumebuilder}}}")
     private String mongoUri;
 
     @Bean
