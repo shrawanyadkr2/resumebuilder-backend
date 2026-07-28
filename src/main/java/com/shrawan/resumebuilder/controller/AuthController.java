@@ -49,11 +49,14 @@ public class AuthController {
     }
 
     @PostMapping(UPLOAD_PROFILE)
-    public ResponseEntity<?> uploadImage(@RequestPart("image")MultipartFile file) throws IOException {
+    public ResponseEntity<?> uploadImage(Authentication authentication, @RequestPart("image") MultipartFile file) throws IOException {
         log.info("Inside AuthController - uploadImage()");
-        Map<String , String > response = fileUploadeService.uploadSingleImage(file);
+        Map<String, String> response = fileUploadeService.uploadSingleImage(file);
+        String imageUrl = response.get("imageUrl");
+        if (authentication != null && authentication.getPrincipal() != null) {
+            authService.updateProfileImage(authentication.getPrincipal(), imageUrl);
+        }
         return ResponseEntity.ok(response);
-
     }
 
     @PostMapping(LOGIN)

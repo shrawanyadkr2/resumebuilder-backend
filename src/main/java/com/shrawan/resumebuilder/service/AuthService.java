@@ -169,6 +169,18 @@ public class AuthService {
 
     public AuthResponse getProfile(Object principalObject) {
         User existingUser = (User) principalObject;
+        // Fetch fresh state from MongoDB
+        User freshUser = userRepository.findById(existingUser.getId()).orElse(existingUser);
+        return toResponse(freshUser);
+    }
+
+    public AuthResponse updateProfileImage(Object principalObject, String imageUrl) {
+        User user = (User) principalObject;
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        existingUser.setProfileImageUrl(imageUrl);
+        existingUser.setUpdatedAt(LocalDateTime.now());
+        userRepository.save(existingUser);
         return toResponse(existingUser);
     }
 }
