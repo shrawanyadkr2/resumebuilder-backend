@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmailService {
 
-    @Value("${spring.mail.properties.mail.smtp.from}")
+    @Value("${spring.mail.properties.mail.smtp.from:${spring.mail.username:shrawan29yadav@gmail.com}}")
     private String fromEmail;
 
     private final JavaMailSender mailSender;

@@ -62,7 +62,7 @@ public class AuthService {
                                 "</div>";
                 emailService.sendHtmlEmail(newUser.getEmail(), "verify your email", html);
             } catch (Exception ex) {
-                log.warn("SMTP email notification warning: {}", ex.getMessage());
+                log.error("SMTP email notification failed for user {}: {}", newUser.getEmail(), ex.getMessage(), ex);
             }
         });
     }
