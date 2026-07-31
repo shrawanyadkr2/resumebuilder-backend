@@ -29,8 +29,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    @Value("${app.base.url:http://localhost:8080}")
-    private String appBaseUrl;
+    @Value("${app.client.url:${app.base.url:http://localhost:5173}}")
+    private String appClientUrl;
 
     public AuthResponse register(RegisterRequest request){
         log.info("Inside AuthService : register() {} ",request);
@@ -52,7 +52,7 @@ public class AuthService {
         log.info("Inside AuthService - sendVarificationEmail(): {}", newUser);
         CompletableFuture.runAsync(() -> {
             try {
-                String link = appBaseUrl + "/api/auth/verify-email?token=" + newUser.getVerificationToken();
+                String link = appClientUrl + "/verify-email?token=" + newUser.getVerificationToken();
                 String html = "<div style='font-family:sans-serif'>" +
                                 "<h2>Verify your email</h2>" +
                                 "<p>Hi " + newUser.getName() + ", please confirm your email to activate your account.</p>" +
