@@ -50,10 +50,12 @@ public class AuthService {
         log.info("Inside AuthService - sendVarificationEmail(): {}", newUser);
         CompletableFuture.runAsync(() -> {
             try {
-                String baseUrl = (appClientUrl != null && !appClientUrl.isBlank())
-                        ? appClientUrl.replaceAll("/+$", "")
-                        : "https://skycodex.vercel.app";
+                String baseUrl = "https://skycodex.vercel.app";
+                if (appClientUrl != null && !appClientUrl.isBlank() && !appClientUrl.contains("localhost") && !appClientUrl.contains("127.0.0.1")) {
+                    baseUrl = appClientUrl.replaceAll("/+$", "");
+                }
                 String link = baseUrl + "/verify-email?token=" + newUser.getVerificationToken();
+                log.info("Generated verification email link for {}: {}", newUser.getEmail(), link);
                 String html = "<div style='font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px;'>" +
                                 "<h2 style='color: #6366f1;'>Verify Your ResumeBuilder PRO Account</h2>" +
                                 "<p>Hi <strong>" + newUser.getName() + "</strong>,</p>" +
