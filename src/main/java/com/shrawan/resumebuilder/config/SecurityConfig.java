@@ -40,8 +40,6 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                                 "/api/auth/register",
-                                "/api/auth/send-phone-otp",
-                                "/api/auth/verify-phone-otp",
                                 "/api/auth/login",
                                 "/api/auth/verify-email",
                                 "/api/auth/upload-image",

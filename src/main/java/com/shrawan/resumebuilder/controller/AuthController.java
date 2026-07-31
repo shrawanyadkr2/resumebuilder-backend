@@ -39,21 +39,6 @@ public class AuthController {
          return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/send-phone-otp")
-    public ResponseEntity<?> sendPhoneOtp(@Valid @RequestBody com.shrawan.resumebuilder.dto.SendPhoneOtpRequest request) {
-        log.info("Inside AuthController - sendPhoneOtp(): {}", request);
-        Map<String, Object> response = authService.sendPhoneOtp(request);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/verify-phone-otp")
-    public ResponseEntity<?> verifyPhoneOtpAndRegister(@Valid @RequestBody com.shrawan.resumebuilder.dto.VerifyPhoneOtpRequest request) {
-        log.info("Inside AuthController - verifyPhoneOtpAndRegister(): {}", request.getPhoneNumber());
-        AuthResponse response = authService.verifyPhoneOtpAndRegister(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-
     @GetMapping(VERIFY_EMAIL)
     public ResponseEntity<?> verifyEmail(@RequestParam String token) {
         log.info("Inside AuthController - verifyEmail(): {}",token);
