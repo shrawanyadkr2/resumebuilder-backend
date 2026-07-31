@@ -44,9 +44,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String,Object>> handleGenericException(Exception ex){
-        log.info("Inside the GlobalExceptionHandler - handleGenericException()");
+        log.error("Inside the GlobalExceptionHandler - handleGenericException(): {}", ex.getMessage(), ex);
         Map<String,Object> response = new HashMap<>();
-        response.put("message","Something went Wrong. Contack admistrator");
+        response.put("message","Something went Wrong. Contact administrator");
         response.put("errors",ex.getMessage());
 
 
