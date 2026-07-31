@@ -22,5 +22,6 @@ public class RegisterRequest {
     @Size(min = 6 , max = 15 , message = "password should be in the range of 6 to 15 charactor")
     private String password;
     private String profileImageUrl;
+    private String phoneNumber;
 
 }

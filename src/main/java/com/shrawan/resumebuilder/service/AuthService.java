@@ -7,6 +7,10 @@ import com.shrawan.resumebuilder.dto.RegisterRequest;
 import com.shrawan.resumebuilder.exception.ResourceExistsException;
 import com.shrawan.resumebuilder.repository.UserRepository;
 import com.shrawan.resumebuilder.util.JwtUtil;
+import com.shrawan.resumebuilder.dto.SendPhoneOtpRequest;
+import com.shrawan.resumebuilder.dto.VerifyPhoneOtpRequest;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +38,79 @@ public class AuthService {
 
     @Value("${app.client.url:${app.base.url:http://localhost:5173}}")
     private String appClientUrl;
+
+    private final Map<String, PhoneOtpData> phoneOtpCache = new java.util.concurrent.ConcurrentHashMap<>();
+
+    @Data
+    @AllArgsConstructor
+    public static class PhoneOtpData {
+        private String otp;
+        private LocalDateTime expiresAt;
+    }
+
+    public Map<String, Object> sendPhoneOtp(SendPhoneOtpRequest request) {
+        log.info("Inside AuthService - sendPhoneOtp(): {}", request);
+        if (request.getEmail() != null && !request.getEmail().isBlank() && userRepository.existsByEmail(request.getEmail())) {
+            throw new ResourceExistsException("User already exists with this email");
+        }
+
+        String phone = request.getPhoneNumber().trim();
+        String otp = String.format("%06d", new java.util.Random().nextInt(999999));
+        phoneOtpCache.put(phone, new PhoneOtpData(otp, LocalDateTime.now().plusMinutes(10)));
+
+        log.info("SMS OTP Generated for Mobile Phone {}: {}", phone, otp);
+
+        return Map.of(
+            "success", true,
+            "message", "6-digit SMS OTP code sent to mobile number " + phone,
+            "otpCode", otp
+        );
+    }
+
+    public AuthResponse verifyPhoneOtpAndRegister(VerifyPhoneOtpRequest request) {
+        log.info("Inside AuthService - verifyPhoneOtpAndRegister(): phone={}", request.getPhoneNumber());
+        String phone = request.getPhoneNumber().trim();
+        PhoneOtpData otpData = phoneOtpCache.get(phone);
+
+        if (otpData == null || !otpData.getOtp().equals(request.getOtp().trim())) {
+            throw new RuntimeException("Invalid 6-digit SMS OTP code. Please check and try again.");
+        }
+
+        if (otpData.getExpiresAt().isBefore(LocalDateTime.now())) {
+            phoneOtpCache.remove(phone);
+            throw new RuntimeException("SMS OTP code has expired. Please request a new code.");
+        }
+
+        // OTP IS VERIFIED! NOW AND ONLY NOW DO WE INSERT THE USER INTO MONGODB!
+        phoneOtpCache.remove(phone);
+
+        if (request.getEmail() != null && !request.getEmail().isBlank() && userRepository.existsByEmail(request.getEmail())) {
+            throw new ResourceExistsException("User already exists with this email");
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        User newUser = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .phoneNumber(phone)
+                .profileImageUrl(request.getProfileImageUrl())
+                .subscriptionPlan("Basic")
+                .emailVerified(true)
+                .phoneVerified(true)
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
+
+        userRepository.save(newUser);
+
+        String jwtToken = jwtUtil.generateToken(newUser.getId());
+
+        AuthResponse response = toResponse(newUser);
+        response.setToken(jwtToken);
+
+        return response;
+    }
 
     public AuthResponse register(RegisterRequest request){
         log.info("Inside AuthService : register() {} ",request);

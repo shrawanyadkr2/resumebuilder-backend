@@ -26,8 +26,10 @@ public class User {
     private String email;
     private String password;
     private String profileImageUrl;
+    private String phoneNumber;
     private String subscriptionPlan = "Basic";
     private boolean emailVerified = false;
+    private boolean phoneVerified = false;
     private String verificationToken;
     private String otpCode;
     private LocalDateTime otpExpires;
