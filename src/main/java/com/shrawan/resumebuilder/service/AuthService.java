@@ -43,9 +43,14 @@ public class AuthService {
 
         userRepository.save(newUser);
 
+        String jwtToken = jwtUtil.generateToken(newUser.getId());
+
+        AuthResponse response = toResponse(newUser);
+        response.setToken(jwtToken);
+
         sendVarificationEmail(newUser);
 
-        return toResponse(newUser);
+        return response;
     }
 
    private void sendVarificationEmail(User newUser) {
@@ -54,13 +59,11 @@ public class AuthService {
             try {
                 String link = appClientUrl + "/verify-email?token=" + newUser.getVerificationToken();
                 String html = "<div style='font-family:sans-serif'>" +
-                                "<h2>Verify your email</h2>" +
-                                "<p>Hi " + newUser.getName() + ", please confirm your email to activate your account.</p>" +
-                                "<p><a href='" + link + "' style='display:inline-block;padding:10px 16px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;'>Verify Email</a></p>" +
-                                "<p>Or copy this link: " + link + "</p>" +
-                                "<p>This link expires in 24 hours.</p>" +
+                                "<h2>Verify Your Account</h2>" +
+                                "<p>Hi " + newUser.getName() + ", thank you for joining ResumeBuilder PRO.</p>" +
+                                "<p><a href='" + link + "' style='display:inline-block;padding:10px 16px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;'>Confirm Email Link</a></p>" +
                                 "</div>";
-                emailService.sendHtmlEmail(newUser.getEmail(), "verify your email", html);
+                emailService.sendHtmlEmail(newUser.getEmail(), "Welcome to ResumeBuilder PRO", html);
             } catch (Exception ex) {
                 log.error("SMTP email notification failed for user {}: {}", newUser.getEmail(), ex.getMessage(), ex);
             }
@@ -90,7 +93,7 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .profileImageUrl(request.getProfileImageUrl())
                 .subscriptionPlan("Basic")
-                .emailVerified(false)
+                .emailVerified(true)
                 .verificationToken(UUID.randomUUID().toString())
                 .verificationExpires(now.plusHours(24))
                 .createdAt(now)
@@ -121,10 +124,6 @@ public class AuthService {
 
         if(!passwordEncoder.matches(request.getPassword(), existingUser.getPassword() )){
             throw new UsernameNotFoundException("Invalid Email and Password");
-        }
-
-        if(!existingUser.isEmailVerified()){
-            throw new RuntimeException("Please verify your email address before logging in.");
         }
 
         String token = jwtUtil.generateToken(existingUser.getId());
