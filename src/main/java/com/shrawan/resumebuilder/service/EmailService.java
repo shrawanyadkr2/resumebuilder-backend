@@ -24,14 +24,20 @@ public class EmailService {
 
     @Async
     public void sendHtmlEmail(String to, String subject, String htmlContent) throws MessagingException {
-        log.info("inside the EmailService - sendHtmlEmail(): {}, {}, {}", to, subject, htmlContent);
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setFrom(fromEmail);
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(htmlContent, true);
-        mailSender.send(message);
+        log.info("inside the EmailService - sendHtmlEmail(): to={}, subject={}", to, subject);
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
+            mailSender.send(message);
+            log.info("Email sent successfully to {}", to);
+        } catch (Exception ex) {
+            log.error("Failed to send email to {}. Error: {}", to, ex.getMessage(), ex);
+            throw ex;
+        }
     }
 
     @Async
