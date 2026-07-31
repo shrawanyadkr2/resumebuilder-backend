@@ -1,43 +1,43 @@
-# 🎯 ResumeBuilder PRO - Ultimate 25-Question Full-Stack Cross-Interview Masterclass & Tech Stack Reference
+#  ResumeBuilder PRO - Ultimate 25-Question Full-Stack Cross-Interview Masterclass & Tech Stack Reference
 
 This single masterclass file contains **every technology & tool justification** alongside **25 detailed technical interview questions with deep architectural explanations, production code snippets, and sequence flow diagrams** covering both backend (Spring Boot 3, Java 21, Security, MongoDB, Brevo, Razorpay, Cloudinary) and frontend (React 19, Vite, Zustand, Tailwind v4, html2pdf.js).
 
 ---
 
-## 📌 Table of Contents
+##  Table of Contents
 
-- **[🛠️ Section 0: Tech Stack, Libraries & Tool Selection Justifications](#-section-0-tech-stack-libraries--tool-selection-justifications)**
+- **[Section 0: Tech Stack, Libraries & Tool Selection Justifications](#-section-0-tech-stack-libraries--tool-selection-justifications)**
   - [1. Backend Ecosystem (Java 21 / Spring Boot 3)](#1-backend-ecosystem-java-21--spring-boot-3)
   - [2. Frontend Ecosystem (React 19 / Vite)](#2-frontend-ecosystem-react-19--vite)
   - [3. Database & Cloud Services Matrix](#3-database--cloud-services-matrix)
-- **[💻 Section 1: System Architecture & Tech Stack Selection](#-1-system-architecture--tech-stack-selection)**
+- **[ Section 1: System Architecture & Tech Stack Selection](#-1-system-architecture--tech-stack-selection)**
   - [Q1: High-Level Full-Stack Architecture Overview](#q1-high-level-full-stack-architecture-overview)
   - [Q2: Why MongoDB Document DB over Relational SQL (PostgreSQL/MySQL)?](#q2-why-mongodb-document-db-over-relational-sql-postgresqlmysql)
   - [Q3: Decoupled Hosting Strategy & CORS Security Configuration](#q3-decoupled-hosting-strategy--cors-security-configuration)
-- **[🔒 Section 2: Authentication, Security & Cryptography](#-2-authentication-security--cryptography)**
+- **[ Section 2: Authentication, Security & Cryptography](#-2-authentication-security--cryptography)**
   - [Q4: Complete User Registration & Email Verification Lifecycle](#q4-complete-user-registration--email-verification-lifecycle)
   - [Q5: Spring Security Custom Stateless JWT Filter Chain](#q5-spring-security-custom-stateless-jwt-filter-chain)
   - [Q6: React 19 StrictMode Double-Invocation & Idempotent Verification](#q6-react-19-strictmode-double-invocation--idempotent-verification)
   - [Q7: BCrypt Password Hashing & Cryptographic Salt Mechanics](#q7-bcrypt-password-hashing--cryptographic-salt-mechanics)
   - [Q8: Handling Expired JWTs & Automatic Session Refresh on Frontend](#q8-handling-expired-jwts--automatic-session-refresh-on-frontend)
-- **[🛠️ Section 3: Production Troubleshooting & Firewall Workarounds](#%EF%B8%8F-3-production-troubleshooting--firewall-workarounds)**
+- **[ Section 3: Production Troubleshooting & Firewall Workarounds](#%EF%B8%8F-3-production-troubleshooting--firewall-workarounds)**
   - [Q9: Overcoming Cloud Outbound SMTP Port Blocks with Brevo HTTP REST API (Port 443)](#q9-overcoming-cloud-outbound-smtp-port-blocks-with-brevo-http-rest-api-port-443)
   - [Q10: Production Verification URL Sanitization & Overriding Localhost Env Vars](#q10-production-verification-url-sanitization--overriding-localhost-env-vars)
   - [Q11: Asynchronous Execution with CompletableFuture & Non-blocking Email Sending](#q11-asynchronous-execution-with-completablefuture--non-blocking-email-sending)
-- **[💳 Section 4: Payment Gateway Integration & Financial Security](#-4-payment-gateway-integration--financial-security)**
+- **[ Section 4: Payment Gateway Integration & Financial Security](#-4-payment-gateway-integration--financial-security)**
   - [Q12: End-to-End Razorpay Payment Order & Checkout Lifecycle](#q12-end-to-end-razorpay-payment-order--checkout-lifecycle)
   - [Q13: Server-Side Cryptographic HMAC-SHA256 Signature Verification](#q13-server-side-cryptographic-hmac-sha256-signature-verification)
   - [Q14: Payment Document State Machine & Subscription Tier Upgrades](#q14-payment-document-state-machine--subscription-tier-upgrades)
-- **[🎨 Section 5: Frontend Real-Time Performance & State Management](#-5-frontend-real-time-performance--state-management)**
+- **[ Section 5: Frontend Real-Time Performance & State Management](#-5-frontend-real-time-performance--state-management)**
   - [Q15: Real-time Live Resume Canvas State Architecture (Zustand + React 19)](#q15-real-time-live-resume-canvas-state-architecture-zustand--react-19)
   - [Q16: Client-Side Vector PDF Export Engine (html2pdf.js vs Server Puppeteer)](#q16-client-side-vector-pdf-export-engine-html2pdfjs-vs-server-puppeteer)
   - [Q17: Direct Recruiter Email Dispatch with PDF Multipart Attachments](#q17-direct-recruiter-email-dispatch-with-pdf-multipart-attachments)
   - [Q18: Dynamic CSS HSL Color Palette & Typography Engine Integration](#q18-dynamic-css-hsl-color-palette--typography-engine-integration)
   - [Q19: Client-Side Route Protection (ProtectedRoute.jsx & React Router v7)](#q19-client-side-route-protection-protectedroutejsx--react-router-v7)
-- **[🖼️ Section 6: Media Management & File Storage](#%EF%B8%8F-6-media-management--file-storage)**
+- **[ Section 6: Media Management & File Storage](#%EF%B8%8F-6-media-management--file-storage)**
   - [Q20: Cloudinary Storage Integration for Avatars & Resume Thumbnails](#q20-cloudinary-storage-integration-for-avatars--resume-thumbnails)
   - [Q21: Global Exception Handling & Controller Input Validation](#q21-global-exception-handling--controller-input-validation)
-- **[⚡ Section 7: Scalability, Caching & Production Readiness](#-7-scalability-caching--production-readiness)**
+- **[ Section 7: Scalability, Caching & Production Readiness](#-7-scalability-caching--production-readiness)**
   - [Q22: Database Indexing Strategy for High-Throughput Queries](#q22-database-indexing-strategy-for-high-throughput-queries)
   - [Q23: Protecting Auth Endpoints Against Rate-Limiting & DoS Attacks](#q23-protecting-auth-endpoints-against-rate-limiting--dos-attacks)
   - [Q24: Spring Boot Actuator Health Monitoring & Security Hardening](#q24-spring-boot-actuator-health-monitoring--security-hardening)
@@ -45,7 +45,7 @@ This single masterclass file contains **every technology & tool justification** 
 
 ---
 
-## 🛠️ Section 0: Tech Stack, Libraries & Tool Selection Justifications
+##  Section 0: Tech Stack, Libraries & Tool Selection Justifications
 
 ### 1. Backend Ecosystem (Java 21 / Spring Boot 3)
 
@@ -94,7 +94,7 @@ This single masterclass file contains **every technology & tool justification** 
 
 ---
 
-## 💻 1. System Architecture & Tech Stack Selection
+##  1. System Architecture & Tech Stack Selection
 
 ### Q1: High-Level Full-Stack Architecture Overview
 
@@ -213,7 +213,7 @@ public CorsConfigurationSource corsConfigurationSource() {
 
 ---
 
-## 🔒 2. Authentication, Security & Cryptography
+##  2. Authentication, Security & Cryptography
 
 ### Q4: Complete User Registration & Email Verification Lifecycle
 
@@ -380,7 +380,7 @@ export default api;
 
 ---
 
-## 🛠️ 3. Production Troubleshooting & Firewall Workarounds
+##  3. Production Troubleshooting & Firewall Workarounds
 
 ### Q9: Overcoming Cloud Outbound SMTP Port Blocks with Brevo HTTP REST API (Port 443)
 
@@ -468,7 +468,7 @@ private void sendVarificationEmail(User newUser) {
 
 ---
 
-## 💳 4. Payment Gateway Integration & Financial Security
+##  4. Payment Gateway Integration & Financial Security
 
 ### Q12: End-to-End Razorpay Payment Order & Checkout Lifecycle
 
@@ -558,7 +558,7 @@ public boolean verifyPayment(String orderId, String paymentId, String signature)
 
 ---
 
-## 🎨 5. Frontend Real-Time Performance & State Management
+##  5. Frontend Real-Time Performance & State Management
 
 ### Q15: Real-Time Live Resume Canvas State Architecture (Zustand + React 19)
 
@@ -656,7 +656,7 @@ export const ProtectedRoute = ({ children }) => {
 
 ---
 
-## 🖼️ 6. Media Management & File Storage
+##  6. Media Management & File Storage
 
 ### Q20: Cloudinary Storage Integration for Avatars & Resume Thumbnails
 
@@ -701,7 +701,7 @@ public class GlobalExceptionHandler {
 
 ---
 
-## ⚡ 7. Scalability, Caching & Production Readiness
+##  7. Scalability, Caching & Production Readiness
 
 ### Q22: Database Indexing Strategy for High-Throughput Queries
 
