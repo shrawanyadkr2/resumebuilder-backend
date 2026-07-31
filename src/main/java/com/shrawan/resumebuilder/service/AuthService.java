@@ -99,8 +99,15 @@ public class AuthService {
 
     public void verifyEmail(String token) {
         log.info("inside AuthService - verifyEmail() : {}", token);
-        User user = userRepository.findByVerificationToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid or Expired verification token"));
+        if (token == null || token.isBlank()) {
+            throw new RuntimeException("Invalid verification token");
+        }
+
+        User user = userRepository.findByVerificationToken(token).orElse(null);
+        if (user == null) {
+            log.info("Verification token not found or already verified: {}", token);
+            return;
+        }
 
         if (user.getVerificationExpires() != null && user.getVerificationExpires().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("Verification token has expired. Please request a new one.");
