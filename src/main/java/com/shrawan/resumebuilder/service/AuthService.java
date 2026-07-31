@@ -62,8 +62,7 @@ public class AuthService {
 
         return Map.of(
             "success", true,
-            "message", "6-digit SMS OTP code sent to mobile number " + phone,
-            "otpCode", otp
+            "message", "6-digit SMS OTP code sent to mobile number " + phone
         );
     }
 
