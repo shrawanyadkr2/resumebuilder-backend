@@ -48,6 +48,18 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body((Map.of("message", "Email verified successfully")));
     }
 
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String otp = body.get("otp");
+        log.info("Inside AuthController - verifyOtp(): email={}, otp={}", email, otp);
+        if (email == null || otp == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Email and OTP are required"));
+        }
+        AuthResponse response = authService.verifyOtp(email, otp);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping(UPLOAD_PROFILE)
     public ResponseEntity<?> uploadImage(Authentication authentication, @RequestPart("image") MultipartFile file) throws IOException {
         log.info("Inside AuthController - uploadImage()");

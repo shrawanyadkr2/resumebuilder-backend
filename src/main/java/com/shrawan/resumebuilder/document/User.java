@@ -29,6 +29,8 @@ public class User {
     private String subscriptionPlan = "Basic";
     private boolean emailVerified = false;
     private String verificationToken;
+    private String otpCode;
+    private LocalDateTime otpExpires;
 
     private LocalDateTime verificationExpires;
     @CreatedDate

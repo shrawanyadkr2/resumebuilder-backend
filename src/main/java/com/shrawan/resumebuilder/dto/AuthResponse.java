@@ -22,6 +22,7 @@ public class AuthResponse {
     private String subscriptionPlan;
     private boolean emailVarified;
     private String token;
+    private String otpCode;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
