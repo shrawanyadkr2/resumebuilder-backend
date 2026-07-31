@@ -123,6 +123,10 @@ public class AuthService {
             throw new UsernameNotFoundException("Invalid Email and Password");
         }
 
+        if(!existingUser.isEmailVerified()){
+            throw new RuntimeException("Please verify your email address before logging in.");
+        }
+
         String token = jwtUtil.generateToken(existingUser.getId());
 
         AuthResponse response = toResponse(existingUser);
