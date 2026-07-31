@@ -46,7 +46,6 @@ public class AuthService {
         sendVarificationEmail(newUser);
 
         AuthResponse response = toResponse(newUser);
-        response.setOtpCode(newUser.getOtpCode());
         return response;
     }
 
@@ -78,7 +77,6 @@ public class AuthService {
                 .emailVarified(newUser.isEmailVerified())
                 .subscriptionPlan(newUser.getSubscriptionPlan())
                 .token(newUser.getVerificationToken())
-                .otpCode(newUser.getOtpCode())
                 .createdAt(newUser.getCreatedAt())
                 .updatedAt(newUser.getUpdatedAt())
                 .build();
