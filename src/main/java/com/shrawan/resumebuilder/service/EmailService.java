@@ -25,13 +25,13 @@ public class EmailService {
     @Value("${spring.mail.properties.mail.smtp.from:${spring.mail.username:shrawan29yadav@gmail.com}}")
     private String fromEmail;
 
-    @Value("${brevo.api.key:${spring.mail.password:}}")
+    @Value("${BREVO_API_KEY:${brevo.api.key:}}")
     private String brevoApiKey;
 
     private final JavaMailSender mailSender;
 
     public void sendHtmlEmail(String to, String subject, String htmlContent) throws MessagingException {
-        log.info("inside the EmailService - sendHtmlEmail(): to={}, subject={}", to, subject);
+        log.info("inside EmailService - sendHtmlEmail(): to={}, subject={}, hasApiKey={}", to, subject, (brevoApiKey != null && !brevoApiKey.isBlank()));
 
         // 1. Try Brevo HTTP REST API (Port 443 - Bypasses all Railway firewall blocks)
         if (sendViaBrevoApi(to, subject, htmlContent)) {
@@ -49,13 +49,13 @@ public class EmailService {
             mailSender.send(message);
             log.info("Email sent successfully via SMTP to {}", to);
         } catch (Exception ex) {
-            log.error("Failed to send email via SMTP to {}. Error: {}", to, ex.getMessage(), ex);
-            throw ex;
+            log.error("Failed to send email via SMTP to {}. Error: {}", to, ex.getMessage());
         }
     }
 
     private boolean sendViaBrevoApi(String to, String subject, String htmlContent) {
         if (brevoApiKey == null || brevoApiKey.isBlank()) {
+            log.warn("BREVO_API_KEY is not configured in environment variables!");
             return false;
         }
         try {
@@ -89,29 +89,36 @@ public class EmailService {
                         StringBuilder errResp = new StringBuilder();
                         String line;
                         while ((line = br.readLine()) != null) errResp.append(line);
-                        log.warn("Brevo HTTP API returned status {}: {}", responseCode, errResp.toString());
+                        log.error("Brevo HTTP API returned error status {}: {}", responseCode, errResp.toString());
                     }
                 }
             }
         } catch (Exception ex) {
-            log.warn("Brevo HTTP API attempt failed: {}", ex.getMessage());
+            log.error("Brevo HTTP API attempt failed: {}", ex.getMessage(), ex);
         }
         return false;
     }
 
     public void sendEmailWithAttachment(String to, String subject, String body, byte[] attachment, String filename) throws MessagingException {
-        log.info("inside the EmailService - sendEmailWithAttachment(): to={}, subject={}", to, subject);
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setFrom(fromEmail);
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(body, true);
-
-        if (attachment != null && attachment.length > 0) {
-            String attachmentName = (filename != null && !filename.isBlank()) ? filename : "resume.pdf";
-            helper.addAttachment(attachmentName, new ByteArrayResource(attachment));
+        log.info("inside EmailService - sendEmailWithAttachment(): to={}, subject={}", to, subject);
+        if (sendViaBrevoApi(to, subject, body)) {
+            return;
         }
-        mailSender.send(message);
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            if (attachment != null && attachment.length > 0) {
+                String attachmentName = (filename != null && !filename.isBlank()) ? filename : "resume.pdf";
+                helper.addAttachment(attachmentName, new ByteArrayResource(attachment));
+            }
+            mailSender.send(message);
+        } catch (Exception ex) {
+            log.error("Failed to send email with attachment via SMTP to {}. Error: {}", to, ex.getMessage());
+        }
     }
 }
