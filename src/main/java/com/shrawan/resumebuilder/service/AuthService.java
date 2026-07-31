@@ -47,21 +47,23 @@ public class AuthService {
         return toResponse(newUser);
     }
 
-    private void sendVarificationEmail(User newUser) {
+   private void sendVarificationEmail(User newUser) {
         log.info("Inside AuthService - sendVarificationEmail(): {}", newUser);
-        try {
-            String link = appBaseUrl + "/api/auth/verify-email?token=" + newUser.getVerificationToken();
-            String html = "<div style='font-family:sans-serif'>" +
-                            "<h2>Verify your email</h2>" +
-                            "<p>Hi " + newUser.getName() + ", please confirm your email to activate your account.</p>" +
-                            "<p><a href='" + link + "' style='display:inline-block;padding:10px 16px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;'>Verify Email</a></p>" +
-                            "<p>Or copy this link: " + link + "</p>" +
-                            "<p>This link expires in 24 hours.</p>" +
-                            "</div>";
-            emailService.sendHtmlEmail(newUser.getEmail(), "verify your email", html);
-        } catch (Exception ex) {
-            log.warn("SMTP email notification warning: {}", ex.getMessage());
-        }
+        CompletableFuture.runAsync(() -> {
+            try {
+                String link = appBaseUrl + "/api/auth/verify-email?token=" + newUser.getVerificationToken();
+                String html = "<div style='font-family:sans-serif'>" +
+                                "<h2>Verify your email</h2>" +
+                                "<p>Hi " + newUser.getName() + ", please confirm your email to activate your account.</p>" +
+                                "<p><a href='" + link + "' style='display:inline-block;padding:10px 16px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;'>Verify Email</a></p>" +
+                                "<p>Or copy this link: " + link + "</p>" +
+                                "<p>This link expires in 24 hours.</p>" +
+                                "</div>";
+                emailService.sendHtmlEmail(newUser.getEmail(), "verify your email", html);
+            } catch (Exception ex) {
+                log.warn("SMTP email notification warning: {}", ex.getMessage());
+            }
+        });
     }
 
     private AuthResponse toResponse(User newUser){
