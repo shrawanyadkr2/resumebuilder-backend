@@ -22,7 +22,6 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Async
     public void sendHtmlEmail(String to, String subject, String htmlContent) throws MessagingException {
         log.info("inside the EmailService - sendHtmlEmail(): to={}, subject={}", to, subject);
         try {
@@ -40,7 +39,6 @@ public class EmailService {
         }
     }
 
-    @Async
     public void sendEmailWithAttachment(String to, String subject, String body, byte[] attachment, String filename) throws MessagingException {
         log.info("inside the EmailService - sendEmailWithAttachment(): to={}, subject={}", to, subject);
         MimeMessage message = mailSender.createMimeMessage();
