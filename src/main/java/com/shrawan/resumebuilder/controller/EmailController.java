@@ -56,6 +56,17 @@ public class EmailController {
         response.put("success",true);
         response.put("message","Resume sent successfully to "+recipientEmail);
         return ResponseEntity.ok(response);
+    }
 
+    @org.springframework.web.bind.annotation.GetMapping("/test")
+    public ResponseEntity<?> testEmail(@org.springframework.web.bind.annotation.RequestParam String to) {
+        log.info("Testing email send to: {}", to);
+        try {
+            emailService.sendHtmlEmail(to, "ResumeBuilder Email Test", "<h2>Email system is working perfectly!</h2>");
+            return ResponseEntity.ok(Map.of("success", true, "message", "Test email sent successfully to " + to));
+        } catch (Exception ex) {
+            log.error("Test email failed: {}", ex.getMessage(), ex);
+            return ResponseEntity.status(500).body(Map.of("success", false, "error", ex.getMessage()));
+        }
     }
 }
