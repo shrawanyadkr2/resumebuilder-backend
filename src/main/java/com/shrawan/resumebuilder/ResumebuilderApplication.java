@@ -19,7 +19,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import org.springframework.scheduling.annotation.EnableAsync;
+
 @SpringBootApplication
+@EnableAsync
 public class ResumebuilderApplication implements CommandLineRunner {
 
     @Autowired

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -89,7 +90,7 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .profileImageUrl(request.getProfileImageUrl())
                 .subscriptionPlan("Basic")
-                .emailVerified(true)
+                .emailVerified(false)
                 .verificationToken(UUID.randomUUID().toString())
                 .verificationExpires(now.plusHours(24))
                 .createdAt(now) // Set to registration time
