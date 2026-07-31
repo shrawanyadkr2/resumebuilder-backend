@@ -28,7 +28,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    @Value("${app.client.url:${app.base.url:http://localhost:5173}}")
+    @Value("${app.client.url:${app.base.url:https://skycodex.vercel.app}}")
     private String appClientUrl;
 
     public AuthResponse register(RegisterRequest request){
@@ -50,7 +50,10 @@ public class AuthService {
         log.info("Inside AuthService - sendVarificationEmail(): {}", newUser);
         CompletableFuture.runAsync(() -> {
             try {
-                String link = appClientUrl + "/verify-email?token=" + newUser.getVerificationToken();
+                String baseUrl = (appClientUrl != null && !appClientUrl.isBlank())
+                        ? appClientUrl.replaceAll("/+$", "")
+                        : "https://skycodex.vercel.app";
+                String link = baseUrl + "/verify-email?token=" + newUser.getVerificationToken();
                 String html = "<div style='font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px;'>" +
                                 "<h2 style='color: #6366f1;'>Verify Your ResumeBuilder PRO Account</h2>" +
                                 "<p>Hi <strong>" + newUser.getName() + "</strong>,</p>" +
