@@ -1,36 +1,96 @@
-# 🎯 ResumeBuilder PRO - Ultimate 25-Question Full-Stack Cross-Interview Masterclass (Backend + Frontend)
+# 🎯 ResumeBuilder PRO - Ultimate 25-Question Full-Stack Cross-Interview Masterclass & Tech Stack Reference
 
-This single masterclass file contains **25 detailed technical interview questions with deep architectural explanations, production code snippets, and sequence flow diagrams** covering both backend (Spring Boot 3, Java 21, Security, MongoDB, Brevo, Razorpay, Cloudinary) and frontend (React 19, Vite, Zustand, Tailwind v4, html2pdf.js).
+This single masterclass file contains **every technology & tool justification** alongside **25 detailed technical interview questions with deep architectural explanations, production code snippets, and sequence flow diagrams** covering both backend (Spring Boot 3, Java 21, Security, MongoDB, Brevo, Razorpay, Cloudinary) and frontend (React 19, Vite, Zustand, Tailwind v4, html2pdf.js).
 
 ---
 
 ## 📌 Table of Contents
 
-1. **[Q1: High-Level Full-Stack Architecture Overview](#q1-high-level-full-stack-architecture-overview)**
-2. **[Q2: Why MongoDB Document DB over Relational SQL (PostgreSQL/MySQL)?](#q2-why-mongodb-document-db-over-relational-sql-postgresqlmysql)**
-3. **[Q3: Decoupled Hosting Strategy & CORS Security Configuration](#q3-decoupled-hosting-strategy--cors-security-configuration)**
-4. **[Q4: Complete User Registration & Email Verification Lifecycle](#q4-complete-user-registration--email-verification-lifecycle)**
-5. **[Q5: Spring Security Custom Stateless JWT Filter Chain](#q5-spring-security-custom-stateless-jwt-filter-chain)**
-6. **[Q6: React 19 StrictMode Double-Invocation & Idempotent Verification](#q6-react-19-strictmode-double-invocation--idempotent-verification)**
-7. **[Q7: BCrypt Password Hashing & Cryptographic Salt Mechanics](#q7-bcrypt-password-hashing--cryptographic-salt-mechanics)**
-8. **[Q8: Handling Expired JWTs & Automatic Session Refresh on Frontend](#q8-handling-expired-jwts--automatic-session-refresh-on-frontend)**
-9. **[Q9: Overcoming Cloud Outbound SMTP Port Blocks with Brevo HTTP REST API (Port 443)](#q9-overcoming-cloud-outbound-smtp-port-blocks-with-brevo-http-rest-api-port-443)**
-10. **[Q10: Production Verification URL Sanitization & Overriding Localhost Env Vars](#q10-production-verification-url-sanitization--overriding-localhost-env-vars)**
-11. **[Q11: Asynchronous Execution with CompletableFuture & Non-blocking Email Sending](#q11-asynchronous-execution-with-completablefuture--non-blocking-email-sending)**
-12. **[Q12: End-to-End Razorpay Payment Order & Checkout Lifecycle](#q12-end-to-end-razorpay-payment-order--checkout-lifecycle)**
-13. **[Q13: Server-Side Cryptographic HMAC-SHA256 Signature Verification](#q13-server-side-cryptographic-hmac-sha256-signature-verification)**
-14. **[Q14: Payment Document State Machine & Subscription Tier Upgrades](#q14-payment-document-state-machine--subscription-tier-upgrades)**
-15. **[Q15: Real-time Live Resume Canvas State Architecture (Zustand + React 19)](#q15-real-time-live-resume-canvas-state-architecture-zustand--react-19)**
-16. **[Q16: Client-Side Vector PDF Export Engine (html2pdf.js vs Server Puppeteer)](#q16-client-side-vector-pdf-export-engine-html2pdfjs-vs-server-puppeteer)**
-17. **[Q17: Direct Recruiter Email Dispatch with PDF Multipart Attachments](#q17-direct-recruiter-email-dispatch-with-pdf-multipart-attachments)**
-18. **[Q18: Dynamic CSS HSL Color Palette & Typography Engine Integration](#q18-dynamic-css-hsl-color-palette--typography-engine-integration)**
-19. **[Q19: Client-Side Route Protection (ProtectedRoute.jsx & React Router v7)](#q19-client-side-route-protection-protectedroutejsx--react-router-v7)**
-20. **[Q20: Cloudinary Storage Integration for Avatars & Resume Thumbnails](#q20-cloudinary-storage-integration-for-avatars--resume-thumbnails)**
-21. **[Q21: Global Exception Handling & Controller Input Validation](#q21-global-exception-handling--controller-input-validation)**
-22. **[Q22: Database Indexing Strategy for High-Throughput Queries](#q22-database-indexing-strategy-for-high-throughput-queries)**
-23. **[Q23: Protecting Auth Endpoints Against Rate-Limiting & DoS Attacks](#q23-protecting-auth-endpoints-against-rate-limiting--dos-attacks)**
-24. **[Q24: Spring Boot Actuator Health Monitoring & Security Hardening](#q24-spring-boot-actuator-health-monitoring--security-hardening)**
-25. **[Q25: Production CI/CD Deployment Strategy & Pre-flight Checklist](#q25-production-cicd-deployment-strategy--pre-flight-checklist)**
+- **[🛠️ Section 0: Tech Stack, Libraries & Tool Selection Justifications](#-section-0-tech-stack-libraries--tool-selection-justifications)**
+  - [1. Backend Ecosystem (Java 21 / Spring Boot 3)](#1-backend-ecosystem-java-21--spring-boot-3)
+  - [2. Frontend Ecosystem (React 19 / Vite)](#2-frontend-ecosystem-react-19--vite)
+  - [3. Database & Cloud Services Matrix](#3-database--cloud-services-matrix)
+- **[💻 Section 1: System Architecture & Tech Stack Selection](#-1-system-architecture--tech-stack-selection)**
+  - [Q1: High-Level Full-Stack Architecture Overview](#q1-high-level-full-stack-architecture-overview)
+  - [Q2: Why MongoDB Document DB over Relational SQL (PostgreSQL/MySQL)?](#q2-why-mongodb-document-db-over-relational-sql-postgresqlmysql)
+  - [Q3: Decoupled Hosting Strategy & CORS Security Configuration](#q3-decoupled-hosting-strategy--cors-security-configuration)
+- **[🔒 Section 2: Authentication, Security & Cryptography](#-2-authentication-security--cryptography)**
+  - [Q4: Complete User Registration & Email Verification Lifecycle](#q4-complete-user-registration--email-verification-lifecycle)
+  - [Q5: Spring Security Custom Stateless JWT Filter Chain](#q5-spring-security-custom-stateless-jwt-filter-chain)
+  - [Q6: React 19 StrictMode Double-Invocation & Idempotent Verification](#q6-react-19-strictmode-double-invocation--idempotent-verification)
+  - [Q7: BCrypt Password Hashing & Cryptographic Salt Mechanics](#q7-bcrypt-password-hashing--cryptographic-salt-mechanics)
+  - [Q8: Handling Expired JWTs & Automatic Session Refresh on Frontend](#q8-handling-expired-jwts--automatic-session-refresh-on-frontend)
+- **[🛠️ Section 3: Production Troubleshooting & Firewall Workarounds](#%EF%B8%8F-3-production-troubleshooting--firewall-workarounds)**
+  - [Q9: Overcoming Cloud Outbound SMTP Port Blocks with Brevo HTTP REST API (Port 443)](#q9-overcoming-cloud-outbound-smtp-port-blocks-with-brevo-http-rest-api-port-443)
+  - [Q10: Production Verification URL Sanitization & Overriding Localhost Env Vars](#q10-production-verification-url-sanitization--overriding-localhost-env-vars)
+  - [Q11: Asynchronous Execution with CompletableFuture & Non-blocking Email Sending](#q11-asynchronous-execution-with-completablefuture--non-blocking-email-sending)
+- **[💳 Section 4: Payment Gateway Integration & Financial Security](#-4-payment-gateway-integration--financial-security)**
+  - [Q12: End-to-End Razorpay Payment Order & Checkout Lifecycle](#q12-end-to-end-razorpay-payment-order--checkout-lifecycle)
+  - [Q13: Server-Side Cryptographic HMAC-SHA256 Signature Verification](#q13-server-side-cryptographic-hmac-sha256-signature-verification)
+  - [Q14: Payment Document State Machine & Subscription Tier Upgrades](#q14-payment-document-state-machine--subscription-tier-upgrades)
+- **[🎨 Section 5: Frontend Real-Time Performance & State Management](#-5-frontend-real-time-performance--state-management)**
+  - [Q15: Real-time Live Resume Canvas State Architecture (Zustand + React 19)](#q15-real-time-live-resume-canvas-state-architecture-zustand--react-19)
+  - [Q16: Client-Side Vector PDF Export Engine (html2pdf.js vs Server Puppeteer)](#q16-client-side-vector-pdf-export-engine-html2pdfjs-vs-server-puppeteer)
+  - [Q17: Direct Recruiter Email Dispatch with PDF Multipart Attachments](#q17-direct-recruiter-email-dispatch-with-pdf-multipart-attachments)
+  - [Q18: Dynamic CSS HSL Color Palette & Typography Engine Integration](#q18-dynamic-css-hsl-color-palette--typography-engine-integration)
+  - [Q19: Client-Side Route Protection (ProtectedRoute.jsx & React Router v7)](#q19-client-side-route-protection-protectedroutejsx--react-router-v7)
+- **[🖼️ Section 6: Media Management & File Storage](#%EF%B8%8F-6-media-management--file-storage)**
+  - [Q20: Cloudinary Storage Integration for Avatars & Resume Thumbnails](#q20-cloudinary-storage-integration-for-avatars--resume-thumbnails)
+  - [Q21: Global Exception Handling & Controller Input Validation](#q21-global-exception-handling--controller-input-validation)
+- **[⚡ Section 7: Scalability, Caching & Production Readiness](#-7-scalability-caching--production-readiness)**
+  - [Q22: Database Indexing Strategy for High-Throughput Queries](#q22-database-indexing-strategy-for-high-throughput-queries)
+  - [Q23: Protecting Auth Endpoints Against Rate-Limiting & DoS Attacks](#q23-protecting-auth-endpoints-against-rate-limiting--dos-attacks)
+  - [Q24: Spring Boot Actuator Health Monitoring & Security Hardening](#q24-spring-boot-actuator-health-monitoring--security-hardening)
+  - [Q25: Production CI/CD Deployment Strategy & Pre-flight Checklist](#q25-production-cicd-deployment-strategy--pre-flight-checklist)
+
+---
+
+## 🛠️ Section 0: Tech Stack, Libraries & Tool Selection Justifications
+
+### 1. Backend Ecosystem (Java 21 / Spring Boot 3)
+
+| Technology / Tool | Exact Technical Purpose & Justification |
+| :--- | :--- |
+| **Java 21 (LTS)** | Chosen for Virtual Threads (Project Loom) for high-concurrency async operations, pattern matching, text blocks for multi-line HTML email templates, and long-term enterprise JVM stability. |
+| **Spring Boot 3.4+** | Chosen for rapid microservice bootstrapping, auto-configuration, dependency injection, embedded Tomcat servlet container, and production-grade actuator integration. |
+| **Spring Security 6** | Implements stateless `Authorization: Bearer <JWT_TOKEN>` filtering via `JwtAuthenticationFilter`, strict CORS domain security for Vercel, and BCrypt credential encryption. |
+| **JJWT (`io.jsonwebtoken`)** | Cryptographically signs stateless JWT tokens using HS256 with 7-day expiration timestamps to authorize user requests without database overhead. |
+| **Spring Data MongoDB** | Provides Object-Document Mapping (ODM) and annotation-driven BSON collection queries (`User`, `Resume`, `Payment`), enabling single-document reads/writes in under 5ms. |
+| **Brevo HTTP REST API (Port 443)** | **Solves Outbound SMTP Port Blocking**: Cloud hosts (Railway/Render) block standard SMTP ports (25/465/587). Sending emails over **HTTPS (Port 443)** guarantees 100% email delivery. |
+| **Razorpay Java SDK** | Server-side order generation and cryptographic **HMAC-SHA256 signature verification** (`orderId + "|" + paymentId`), mathematically blocking fraudulent payment claims. |
+| **Cloudinary Java SDK** | Offloads avatar photos and template thumbnails to a global CDN, returning optimized HTTPS image links instead of burdening application storage. |
+| **Lombok** | Eliminates boilerplate bytecode (`@Data`, `@Builder`, `@RequiredArgsConstructor`, `@Slf4j`) for cleaner, maintainable code. |
+| **Jakarta Validation** | Enforces server-side DTO payload validation (`@NotBlank`, `@Email`, `@Valid`) before controller business logic executes. |
+
+---
+
+### 2. Frontend Ecosystem (React 19 / Vite)
+
+| Technology / Tool | Exact Technical Purpose & Justification |
+| :--- | :--- |
+| **React 19** | Component-based UI rendering, enhanced hook lifecycle management, and strict mode support for high-performance single page applications. |
+| **Vite 8** | Uses Native ES Modules (ESM) for instant Hot Module Replacement (HMR) during development and fast production bundling (`npm run build`). |
+| **TailwindCSS v4** | Combines utility classes with dynamic CSS custom properties (`--primary-h`, `--primary-s`, `--primary-l`) to allow real-time theme switching across 6 HSL palettes on the live canvas. |
+| **React Router v7** | Manages SPA client-side routes (`/dashboard`, `/builder`, `/pricing`, `/verify-email`) and route protection gates (`ProtectedRoute.jsx`). |
+| **Zustand (`uiStore.js`)** | **Zero Re-render Input Lag**: Manages live builder UI state. Unlike React Context API, Zustand prevents unnecessary canvas re-renders when typing into form fields. |
+| **TanStack React Query v5** | Manages server-state caching, background refetching, and synchronization for template galleries and user payment history. |
+| **Axios Interceptors** | Request interceptor automatically attaches `Bearer <token>`; response interceptor detects HTTP 401 token expiry and handles session cleanup. |
+| **`html2pdf.js`** | **Zero Server CPU Overhead**: Converts live HTML DOM into high-resolution vector PDFs directly inside the user's browser, avoiding memory-heavy backend Puppeteer instances. |
+| **Lucide React** | Lightweight vector SVG icon system for UI controls and dashboard analytics. |
+| **Sonner** | Clean, stackable toast notifications for user alerts, form validations, and payment confirmations. |
+
+---
+
+### 3. Database & Cloud Services Matrix
+
+| Cloud Service | Category | Technical Purpose & Justification |
+| :--- | :--- | :--- |
+| **MongoDB Atlas** | Managed NoSQL Database | Stores BSON documents for `users`, `resumes`, and `payments`. Chosen for schema flexibility with nested resume arrays and fast single-document read performance. |
+| **Vercel** | Edge CDN Web Hosting | Hosts the React 19 SPA ([https://skycodex.vercel.app](https://skycodex.vercel.app)). Provides sub-100ms global load times and automated GitHub continuous deployment. |
+| **Railway / Render** | Cloud Container Platform | Hosts the Spring Boot JVM backend container. Provides persistent runtime memory, environment variable bindings, and Maven build deployment. |
+| **Brevo (Sendinblue)** | Transactional Email Service | Delivers HTML verification emails and recruiter resume dispatches via HTTPS REST API (Port 443). |
+| **Cloudinary CDN** | Cloud Asset Storage | Serves user profile avatars and template preview images with global CDN caching and automatic image compression. |
+| **Razorpay Gateway** | Payment Processing | Handles Indian Rupee (INR) payments (UPI, Credit/Debit Cards, NetBanking) for Premium subscription plan upgrades. |
 
 ---
 
@@ -686,4 +746,4 @@ management.health.mail.enabled=false
 
 ---
 
-*This single 25-question masterclass document contains everything required to excel in full-stack technical interviews for **ResumeBuilder PRO**.*
+*This single masterclass document contains everything required to excel in full-stack technical interviews for **ResumeBuilder PRO**.*
