@@ -43,9 +43,14 @@ public class AuthService {
 
         userRepository.save(newUser);
 
+        String jwtToken = jwtUtil.generateToken(newUser.getId());
+
+        AuthResponse response = toResponse(newUser);
+        response.setToken(jwtToken);
+
         sendVarificationEmail(newUser);
 
-        return toResponse(newUser);
+        return response;
     }
 
    private void sendVarificationEmail(User newUser) {
@@ -90,7 +95,7 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .profileImageUrl(request.getProfileImageUrl())
                 .subscriptionPlan("Basic")
-                .emailVerified(false)
+                .emailVerified(true)
                 .verificationToken(UUID.randomUUID().toString())
                 .verificationExpires(now.plusHours(24))
                 .createdAt(now) // Set to registration time
@@ -121,10 +126,6 @@ public class AuthService {
 
         if(!passwordEncoder.matches(request.getPassword(), existingUser.getPassword() )){
             throw new UsernameNotFoundException("Invalid Email and Password");
-        }
-
-        if(!existingUser.isEmailVerified()){
-            throw new RuntimeException("Please verify your email address before logging in.");
         }
 
         String token = jwtUtil.generateToken(existingUser.getId());
